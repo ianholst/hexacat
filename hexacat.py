@@ -1,5 +1,5 @@
 from websocket import RobotWebSocketServer
-from hardware import LEDDisplay, ServoDriver, Faces, Leg, walkCycle
+from hardware import LEDDisplay, ServoDriver, Faces, Leg
 import threading
 
 server = RobotWebSocketServer("10.0.0.1", 8080)
