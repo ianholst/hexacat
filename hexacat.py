@@ -1,9 +1,50 @@
-from websocket import RobotWebSocketServer
 from hardware import LEDDisplay, ServoDriver, Faces, Leg
 import threading
+import subprocess
+from autobahn.asyncio.websocket import WebSocketServerProtocol, WebSocketServerFactory
+try:
+    import asyncio
+except ImportError:
+    import trollius as asyncio
 
-server = RobotWebSocketServer("10.0.0.1", 8080)
-threading.Thread(target=server.start()).start()
+
+class RobotServerProtocol(WebSocketServerProtocol):
+
+    def onConnect(self, request):
+        print("Client connecting: " + request.peer)
+        # TODO: flash face
+
+    def onOpen(self):
+        print("WebSocket connection open.")
+        # TODO: face smile
+
+    def onMessage(self, payload, isBinary):
+        if not isBinary:
+            handleMessage(payload.decode("utf8"), self)
+        # echo back message verbatim
+        # self.sendMessage(payload, isBinary)
+
+    def onClose(self, wasClean, code, reason):
+        print("WebSocket connection closed for reason: " + str(reason))
+
+
+class RobotServerFactory(WebSocketServerFactory):
+
+factory = WebSocketServerFactory()
+factory.protocol = RobotServerProtocol
+loop = asyncio.get_event_loop()
+
+def startWebSocketServer(address, port):
+    global server
+    print("Starting WebSocket server...")
+    server = loop.run_until_complete(loop.create_server(factory, address, port))
+    try:
+        loop.run_forever()
+    finally:
+        server.close()
+        loop.close()
+
+threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
 
 # # Add scalable time in between steps to control speed
 # # Add scalable angles for steering
@@ -81,6 +122,28 @@ def walkCycle(cycles):
     time.sleep(1)
     setdefault()
 
+def handleMessage(msg, server):
+    if msg == "FORWARD":
+
+    elif msg == "BACKWARD":
+
+    elif msg == "ROTATELEFT":
+
+    elif msg == "ROTATERIGHT":
+
+    elif msg == "STOP":
+
+    elif msg.startswith("FACE"):
+        faceID = int(msg[5:])
+
+    elif msg == "SHUTDOWN":
+        subprocess.call("shutdown now")
+
+    elif msg == "BATTERY":
+        batteryOutput = subprocess.check_output("./battery.sh")
+        lineIndex = batteryOutput.find("Battery gauge")
+        percentage = batteryOutput[lineIndex+len("Battery gauge")+3:]
+        server.sendMessage(percentage.encode('utf8'))
 
 
 try:

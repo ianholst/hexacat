@@ -7,4 +7,4 @@ sntp -s time.nist.gov
 cd /root/hexacat
 git pull
 # Start python script
-python /root/hexacat/hexacat.py
+python hexacat.py
