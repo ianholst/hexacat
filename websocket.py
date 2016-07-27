@@ -29,6 +29,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
 class RobotWebSocketServer(object):
 
     def __init__(self, address, port):
+        print("Starting WebSocket server...")
         self.factory = WebSocketServerFactory()
         self.factory.protocol = RobotServerProtocol
         self.loop = asyncio.get_event_loop()

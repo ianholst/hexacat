@@ -1,9 +1,9 @@
 from websocket import RobotWebSocketServer
 from hardware import LEDDisplay, ServoDriver, Faces, Leg, walkCycle
+import threading
 
-print("Starting WebSocket server...")
 server = RobotWebSocketServer("10.0.0.1", 8080)
-server.start()
+threading.Thread(target=server.start()).start()
 
 # # Add scalable time in between steps to control speed
 # # Add scalable angles for steering
