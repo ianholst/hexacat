@@ -63,10 +63,7 @@ sudo update-rc.d hostapd enable
 sudo update-rc.d dnsmasq enable
 ```
 
-<!-- Run with: `sudo hostapd -B /etc/hostapd.conf` `sudo systemctl restart dnsmasq` --> <!-- `ifconfig wlan1 up 10.0.0.1 netmask 255.255.255.0` -->
-
 # Setup root auto-login
-
 1. `sudo nano /lib/systemd/system/getty@.service` and change:<br>
   `ExecStart=-/sbin/agetty --noclear %I $TERM`<br>
   to<br>

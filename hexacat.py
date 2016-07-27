@@ -30,6 +30,59 @@ leg4 = Leg(4, lowerOffset=-7)
 leg5 = Leg(5, lowerOffset=-5)
 leg6 = Leg(6)
 
+upperMoveAngle = 20
+lowerMoveAngle = 25
+
+# LOWER LEG
+def liftup(legs):
+    for leg in legs:
+        leg.moveLower(lowerMoveAngle)
+
+def setdown(legs):
+    for leg in legs:
+        leg.moveLower(0)
+
+# UPPER LEG
+def forward(legs):
+    for leg in legs:
+        leg.moveUpper(upperMoveAngle)
+
+def backward(legs):
+    for leg in legs:
+        leg.moveUpper(-upperMoveAngle)
+
+# BOTH LEGS
+def setdefault():
+    for leg in [leg1,leg2,leg3,leg4,leg5,leg6]:
+        leg.moveLower(0)
+        leg.moveUpper(0)
+
+def walkCycle(cycles):
+    setdefault()
+    time.sleep(5)
+
+    for x in range(cycles):
+        liftup([leg1, leg3, leg5])
+        forward([leg1, leg3, leg5])
+        time.sleep(.1)
+        backward([leg2, leg4, leg6])
+        time.sleep(.2)
+        setdown([leg1, leg3, leg5])
+        time.sleep(.2)
+
+        liftup([leg2, leg4, leg6])
+        forward([leg2, leg4, leg6])
+        time.sleep(.1)
+        backward([leg1, leg3, leg5])
+        time.sleep(.2)
+        setdown([leg2, leg4, leg6])
+        time.sleep(.2)
+
+    time.sleep(1)
+    setdefault()
+
+
+
 try:
     print("walking")
     walkCycle(20)
