@@ -74,14 +74,12 @@ sudo update-rc.d dnsmasq enable
 2. `sudo reboot`
 
 
-# Get hexacat repository
+# Get hexacat software set up and auto start
 1. Sign into root account
-2. `git clone [repo]`
+2. `git clone https://github.com/ianholst/hexacat`
 3. `cd hexacat`
 4. `chmod +x hexacat.sh`
-
-# Login script
-1. Sign into root account
+5. `cd ..`
 2. `nano .profile`
 3. Add contents:
   ```

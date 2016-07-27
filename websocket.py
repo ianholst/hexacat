@@ -9,6 +9,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
         print("Client connecting: " + request.peer)
+        # TODO: flash face
 
     def onOpen(self):
         print("WebSocket connection open.")
@@ -31,8 +32,7 @@ class RobotWebSocketServer(object):
         self.factory = WebSocketServerFactory()
         self.factory.protocol = RobotServerProtocol
         self.loop = asyncio.get_event_loop()
-        self.coro = self.loop.create_server(self.factory, address, port)
-        self.server = self.loop.run_until_complete(self.coro)
+        self.server = self.loop.run_until_complete(self.loop.create_server(self.factory, address, port))
 
     def start(self):
         try:
