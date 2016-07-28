@@ -63,15 +63,7 @@ def startWebSocketServer(address, port):
 
 
 
-leg1 = Leg(1, servoDriver)
-leg2 = Leg(2, servoDriver)
-leg3 = Leg(3, servoDriver, lowerOffset=-8)
-leg4 = Leg(4, servoDriver, lowerOffset=-7)
-leg5 = Leg(5, servoDriver, lowerOffset=-5)
-leg6 = Leg(6, servoDriver)
 
-upperMoveAngle = 20
-lowerMoveAngle = 25
 
 # LOWER LEG
 def liftup(legs):
@@ -157,6 +149,17 @@ try:
     servoDriver = ServoDriver(busnum=1)
     ledDisplay = LEDDisplay(busnum=2)
     ledDisplay.shutOff()
+
+    leg1 = Leg(1, servoDriver)
+    leg2 = Leg(2, servoDriver)
+    leg3 = Leg(3, servoDriver, lowerOffset=-8)
+    leg4 = Leg(4, servoDriver, lowerOffset=-7)
+    leg5 = Leg(5, servoDriver, lowerOffset=-5)
+    leg6 = Leg(6, servoDriver)
+
+    upperMoveAngle = 20
+    lowerMoveAngle = 25
+
     setdefault()
     HALT = True
     threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
