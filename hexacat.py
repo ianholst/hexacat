@@ -115,6 +115,7 @@ def walkCycle():
 
 def handleMessage(msg, server):
     global HALT
+    print(msg)
     if msg == "FORWARD":
         walkCycle()
 
