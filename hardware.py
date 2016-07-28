@@ -63,7 +63,7 @@ class Faces:
 
 class Leg:
 
-    def __init__(self, id, upperOffset=0, lowerOffset=0):
+    def __init__(self, id, driver, upperOffset=0, lowerOffset=0):
         self.id = id
         if self.id in [1,2,6]:
             self.left = True
@@ -71,6 +71,7 @@ class Leg:
         elif self.id in [3,4,5]:
             self.left = False
             self.right = True
+        self.driver = driver
         self.lowerOffset = lowerOffset
         self.upperOffset = upperOffset
         self.lowerChannel = (self.id - 1) * 2 + 1
@@ -81,21 +82,21 @@ class Leg:
 
     def moveLower(self, angle):
         if self.left:
-            servoDriver.move(self.lowerChannel, self.lowerRestAngle + angle + self.lowerOffset)
+            self.driver.move(self.lowerChannel, self.lowerRestAngle + angle + self.lowerOffset)
         elif self.right:
-            servoDriver.move(self.lowerChannel, servoDriver.max_angle - (self.lowerRestAngle + angle + self.lowerOffset))
+            self.driver.move(self.lowerChannel, self.driver.max_angle - (self.lowerRestAngle + angle + self.lowerOffset))
 
     def moveUpper(self, angle):
         if self.left and self.id != 6 or self.id == 3:
             if self.id == 3:
-                servoDriver.move(self.upperChannel, self.upperRestAngle + angle + self.backLowerOffset + self.upperOffset)
+                self.driver.move(self.upperChannel, self.upperRestAngle + angle + self.backLowerOffset + self.upperOffset)
             else:
-                servoDriver.move(self.upperChannel, self.upperRestAngle + angle + self.upperOffset)
+                self.driver.move(self.upperChannel, self.upperRestAngle + angle + self.upperOffset)
         elif self.right and self.id != 3 or self.id == 6:
             if self.id == 6:
-                servoDriver.move(self.upperChannel, servoDriver.max_angle - (self.upperRestAngle + angle + self.backLowerOffset + self.upperOffset) + 45)
+                self.driver.move(self.upperChannel, self.driver.max_angle - (self.upperRestAngle + angle + self.backLowerOffset + self.upperOffset) + 45)
             else:
-                servoDriver.move(self.upperChannel, servoDriver.max_angle - (self.upperRestAngle + angle + self.upperOffset) + 45)
+                self.driver.move(self.upperChannel, self.driver.max_angle - (self.upperRestAngle + angle + self.upperOffset) + 45)
 
 def testlooppwm():
     while True:

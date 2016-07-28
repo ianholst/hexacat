@@ -63,12 +63,12 @@ def startWebSocketServer(address, port):
 
 
 
-leg1 = Leg(1)
-leg2 = Leg(2)
-leg3 = Leg(3, lowerOffset=-8)
-leg4 = Leg(4, lowerOffset=-7)
-leg5 = Leg(5, lowerOffset=-5)
-leg6 = Leg(6)
+leg1 = Leg(1, servoDriver)
+leg2 = Leg(2, servoDriver)
+leg3 = Leg(3, servoDriver, lowerOffset=-8)
+leg4 = Leg(4, servoDriver, lowerOffset=-7)
+leg5 = Leg(5, servoDriver, lowerOffset=-5)
+leg6 = Leg(6, servoDriver)
 
 upperMoveAngle = 20
 lowerMoveAngle = 25
