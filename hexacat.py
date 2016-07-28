@@ -143,7 +143,7 @@ def handleMessage(msg, server):
 
 
 def main():
-    global HALT
+    global HALTservoDriver, ledDisplay, leg1, leg2, leg3, leg4, leg5, leg6, upperMoveAngle, lowerMoveAngle
     try:
         print("Starting hardware...")
         servoDriver = ServoDriver(busnum=1)
