@@ -89,6 +89,7 @@ def walkCycle():
     global HALT
     HALT = False
     setdefault()
+    print("walk")
 
     while not HALT:
         liftup([leg1, leg3, leg5])
