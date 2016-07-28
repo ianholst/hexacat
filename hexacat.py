@@ -140,7 +140,7 @@ def handleMessage(msg, server):
         batteryOutput = subprocess.check_output("./battery.sh", shell=True)
         lineIndex = batteryOutput.find("Battery gauge")
         percentage = batteryOutput[lineIndex+len("Battery gauge")+3:]
-        server.sendMessage(percentage.encode('utf8'))
+        server.sendMessage(("BATTERY:" + percentage).encode('utf8'))
 
 # MAIN
 
