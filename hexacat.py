@@ -18,7 +18,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
     def onOpen(self):
         print("WebSocket connection open.")
         # TODO: face smile
-        ledDisplay.draw(Faces.a)
+        ledDisplay.draw(Faces.b)
 
     def onMessage(self, payload, isBinary):
         if not isBinary:
@@ -37,7 +37,6 @@ factory.protocol = RobotServerProtocol
 loop = asyncio.get_event_loop()
 
 def startWebSocketServer(address, port):
-    global server
     print("Starting WebSocket server...")
     server = loop.run_until_complete(loop.create_server(factory, address, port))
     try:
@@ -45,8 +44,6 @@ def startWebSocketServer(address, port):
     finally:
         server.close()
         loop.close()
-
-
 
 
 # # Add scalable time in between steps to control speed
@@ -60,10 +57,6 @@ def startWebSocketServer(address, port):
 # 0,1  6,7
 # 2,3  8,9
 # 4,5  10,11
-
-
-
-
 
 # LOWER LEG
 def liftup(legs):
@@ -164,7 +157,9 @@ try:
     HALT = True
     threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
     print("Ready for input")
+    ledDisplay.draw(Faces.a)
 
 except KeyboardInterrupt:
     setdefault()
     ledDisplay.shutOff()
+    raise
