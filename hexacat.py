@@ -134,10 +134,10 @@ def handleMessage(msg, server):
         faceID = int(msg[5:])
 
     elif msg == "SHUTDOWN":
-        subprocess.call("shutdown now")
+        subprocess.call("shutdown now", shell=True)
 
     elif msg == "BATTERY":
-        batteryOutput = subprocess.check_output("./battery.sh")
+        batteryOutput = subprocess.check_output("./battery.sh", shell=True)
         lineIndex = batteryOutput.find("Battery gauge")
         percentage = batteryOutput[lineIndex+len("Battery gauge")+3:]
         server.sendMessage(percentage.encode('utf8'))
