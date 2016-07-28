@@ -8,6 +8,7 @@ except ImportError:
     import trollius as asyncio
 
 
+
 class RobotServerProtocol(WebSocketServerProtocol):
 
     def onConnect(self, request):
@@ -17,6 +18,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
     def onOpen(self):
         print("WebSocket connection open.")
         # TODO: face smile
+        ledDisplay.draw(Faces.a)
 
     def onMessage(self, payload, isBinary):
         if not isBinary:
@@ -28,7 +30,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
         print("WebSocket connection closed for reason: " + str(reason))
 
 
-class RobotServerFactory(WebSocketServerFactory):
+# class RobotServerFactory(WebSocketServerFactory):
 
 factory = WebSocketServerFactory()
 factory.protocol = RobotServerProtocol
@@ -44,7 +46,8 @@ def startWebSocketServer(address, port):
         server.close()
         loop.close()
 
-threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
+
+
 
 # # Add scalable time in between steps to control speed
 # # Add scalable angles for steering
@@ -58,11 +61,7 @@ threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
 # 2,3  8,9
 # 4,5  10,11
 
-# MAIN
-print("Starting hardware...")
-servoDriver = ServoDriver(busnum=1)
-ledDisplay = LEDDisplay(busnum=2)
-ledDisplay.draw(Faces.a)
+
 
 leg1 = Leg(1)
 leg2 = Leg(2)
@@ -98,11 +97,12 @@ def setdefault():
         leg.moveLower(0)
         leg.moveUpper(0)
 
-def walkCycle(cycles):
+def walkCycle():
+    global HALT
+    HALT = False
     setdefault()
-    time.sleep(5)
 
-    for x in range(cycles):
+    while not HALT:
         liftup([leg1, leg3, leg5])
         forward([leg1, leg3, leg5])
         time.sleep(.1)
@@ -110,6 +110,8 @@ def walkCycle(cycles):
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
         time.sleep(.2)
+
+        if HALT: break
 
         liftup([leg2, leg4, leg6])
         forward([leg2, leg4, leg6])
@@ -119,19 +121,23 @@ def walkCycle(cycles):
         setdown([leg2, leg4, leg6])
         time.sleep(.2)
 
-    time.sleep(1)
+        if HALT: break
+
     setdefault()
 
 def handleMessage(msg, server):
+    global HALT
     if msg == "FORWARD":
+        walkCycle()
 
     elif msg == "BACKWARD":
-
+        pass
     elif msg == "ROTATELEFT":
-
+        pass
     elif msg == "ROTATERIGHT":
-
+        pass
     elif msg == "STOP":
+        HALT = True
 
     elif msg.startswith("FACE"):
         faceID = int(msg[5:])
@@ -144,6 +150,15 @@ def handleMessage(msg, server):
         lineIndex = batteryOutput.find("Battery gauge")
         percentage = batteryOutput[lineIndex+len("Battery gauge")+3:]
         server.sendMessage(percentage.encode('utf8'))
+
+# MAIN
+print("Starting hardware...")
+servoDriver = ServoDriver(busnum=1)
+ledDisplay = LEDDisplay(busnum=2)
+ledDisplay.shutOff()
+setdefault()
+HALT = True
+threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
 
 
 try:
