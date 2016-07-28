@@ -32,16 +32,18 @@ class RobotServerProtocol(WebSocketServerProtocol):
 
 # class RobotServerFactory(WebSocketServerFactory):
 
-factory = WebSocketServerFactory()
-factory.protocol = RobotServerProtocol
-loop = asyncio.get_event_loop()
-
 def startWebSocketServer(address, port):
     print("Starting WebSocket server...")
+    factory = WebSocketServerFactory()
+    factory.protocol = RobotServerProtocol
+    loop = asyncio.get_event_loop()
     coro = loop.create_server(factory, address, port)
     server = loop.run_until_complete(coro)
+
     try:
         loop.run_forever()
+    except KeyboardInterrupt:
+        pass
     finally:
         server.close()
         loop.close()
