@@ -38,7 +38,8 @@ loop = asyncio.get_event_loop()
 
 def startWebSocketServer(address, port):
     print("Starting WebSocket server...")
-    server = loop.run_until_complete(loop.create_server(factory, address, port))
+    coro = loop.create_server(factory, address, port)
+    server = loop.run_until_complete(coro)
     try:
         loop.run_forever()
     finally:
