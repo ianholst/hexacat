@@ -152,18 +152,16 @@ def handleMessage(msg, server):
         server.sendMessage(percentage.encode('utf8'))
 
 # MAIN
-print("Starting hardware...")
-servoDriver = ServoDriver(busnum=1)
-ledDisplay = LEDDisplay(busnum=2)
-ledDisplay.shutOff()
-setdefault()
-HALT = True
-threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
-
-
 try:
-    print("walking")
-    walkCycle(20)
+    print("Starting hardware...")
+    servoDriver = ServoDriver(busnum=1)
+    ledDisplay = LEDDisplay(busnum=2)
+    ledDisplay.shutOff()
+    setdefault()
+    HALT = True
+    threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
+    print("Ready for input")
+
 except KeyboardInterrupt:
     setdefault()
     ledDisplay.shutOff()
