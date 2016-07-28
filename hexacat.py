@@ -105,7 +105,6 @@ def walkForward():
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
         time.sleep(.1)
-        if HALT: break
     setdefault()
 
 def walkBackward():
@@ -118,7 +117,7 @@ def walkBackward():
         forward([leg2, leg4, leg6])
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
-        time.sleep(.2)
+        time.sleep(.1)
         if HALT: break
         liftup([leg2, leg4, leg6])
         backward([leg2, leg4, leg6])
@@ -126,8 +125,57 @@ def walkBackward():
         forward([leg1, leg3, leg5])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
+        time.sleep(.1)
+    setdefault()
+
+def rotateLeft():
+    global HALT
+    while not HALT:
+        print("moving")
+        liftup([leg1, leg3, leg5])
+        backward([leg1, leg5]);
+        forward([leg3])
+        time.sleep(.1)
+        forward([leg4, leg6])
+        backward([leg2])
         time.sleep(.2)
+        setdown([leg1, leg3, leg5])
+        time.sleep(.1)
         if HALT: break
+        liftup([leg2, leg4, leg6])
+        backward([leg4, leg6])
+        forward([leg2])
+        time.sleep(.1)
+        forward([leg1, leg5])
+        backward([leg3])
+        time.sleep(.2)
+        setdown([leg2, leg4, leg6])
+        time.sleep(.1)
+    setdefault()
+
+def rotateRight():
+    global HALT
+    while not HALT:
+        print("moving")
+        liftup([leg1, leg3, leg5])
+        forward([leg1, leg5]);
+        backward([leg3])
+        time.sleep(.1)
+        backward([leg4, leg6])
+        forward([leg2])
+        time.sleep(.2)
+        setdown([leg1, leg3, leg5])
+        time.sleep(.1)
+        if HALT: break
+        liftup([leg2, leg4, leg6])
+        forward([leg4, leg6])
+        backward([leg2])
+        time.sleep(.1)
+        backward([leg1, leg5])
+        forward([leg3])
+        time.sleep(.2)
+        setdown([leg2, leg4, leg6])
+        time.sleep(.1)
     setdefault()
 
 def handleMessage(msg, server):
@@ -140,9 +188,11 @@ def handleMessage(msg, server):
         HALT = False
         walkBackward()
     elif msg == "ROTATELEFT":
-        pass
+        HALT = False
+        rotateLeft()
     elif msg == "ROTATERIGHT":
-        pass
+        HALT = False
+        rotateRight()
     elif msg == "STOP":
         HALT = True
 
