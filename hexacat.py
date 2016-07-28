@@ -22,7 +22,7 @@ class RobotServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, payload, isBinary):
         if not isBinary:
-            handleMessage(payload.decode("utf8"), self)
+            threading.Thread(target=handleMessage, args=(payload.decode("utf8"), self)).start()
         # echo back message verbatim
         # self.sendMessage(payload, isBinary)
 
@@ -99,9 +99,9 @@ def walkCycle():
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
         time.sleep(.2)
-
+        print("walk1")
         if HALT: break
-
+        print("walk2")
         liftup([leg2, leg4, leg6])
         forward([leg2, leg4, leg6])
         time.sleep(.1)
