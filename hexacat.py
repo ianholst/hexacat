@@ -133,8 +133,8 @@ def rotateLeft():
     while not HALT:
         print("moving")
         liftup([leg1, leg3, leg5])
-        backward([leg1, leg5]);
-        forward([leg3])
+        backward([leg1, leg3]);
+        forward([leg5])
         time.sleep(.1)
         forward([leg4, leg6])
         backward([leg2])
@@ -146,8 +146,8 @@ def rotateLeft():
         backward([leg4, leg6])
         forward([leg2])
         time.sleep(.1)
-        forward([leg1, leg5])
-        backward([leg3])
+        forward([leg1, leg3])
+        backward([leg5])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
         time.sleep(.1)
@@ -158,8 +158,8 @@ def rotateRight():
     while not HALT:
         print("moving")
         liftup([leg1, leg3, leg5])
-        forward([leg1, leg5]);
-        backward([leg3])
+        forward([leg1, leg3]);
+        backward([leg5])
         time.sleep(.1)
         backward([leg4, leg6])
         forward([leg2])
@@ -171,8 +171,8 @@ def rotateRight():
         forward([leg4, leg6])
         backward([leg2])
         time.sleep(.1)
-        backward([leg1, leg5])
-        forward([leg3])
+        backward([leg1, leg3])
+        forward([leg5])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
         time.sleep(.1)
