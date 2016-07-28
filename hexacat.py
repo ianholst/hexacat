@@ -151,8 +151,8 @@ def rotateLeft():
         time.sleep(.1)
         setdown([leg2, leg4, leg6])
         time.sleep(.2)
-        backward([leg4, leg6])
-        forward([leg2])
+        forward([leg4, leg6])
+        backward([leg2])
         time.sleep(.1)
 
     setdefault()
