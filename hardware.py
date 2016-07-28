@@ -1,7 +1,6 @@
 from __future__ import division
 from Adafruit_LED_Backpack.Matrix8x8 import Matrix8x8
 from Adafruit_PCA9685 import PCA9685
-import time
 
 
 class ServoDriver(PCA9685):

@@ -1,6 +1,7 @@
 from hardware import LEDDisplay, ServoDriver, Faces, Leg
 import threading
 import subprocess
+import time
 from autobahn.asyncio.websocket import WebSocketServerProtocol, WebSocketServerFactory
 try:
     import asyncio
