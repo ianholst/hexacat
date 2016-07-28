@@ -30,7 +30,7 @@ class LEDDisplay(Matrix8x8):
         self.clear()
         for y in range(8):
             for x in range(8):
-                self.set_pixel(x, y, image[x][7-y])
+                self.set_pixel(x, y, image[7-x][y])
         self.write_display()
 
     def shutOff(self):
