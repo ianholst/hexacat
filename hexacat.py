@@ -49,6 +49,8 @@ def startWebSocketServer(address, port):
     finally:
         server.close()
         loop.close()
+        setdefault()
+        ledDisplay.shutOff()
 
 
 # # Add scalable time in between steps to control speed
@@ -136,22 +138,14 @@ def rotateLeft():
         liftup([leg1, leg3, leg5])
         backward([leg1, leg3]);
         forward([leg5])
-        time.sleep(.1)
-        backward([leg4, leg6])
-        forward([leg2])
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
-        time.sleep(.1)
         if HALT: break
         liftup([leg2, leg4, leg6])
-        backward([leg4, leg6])
-        forward([leg2])
-        time.sleep(.1)
-        backward([leg1, leg3])
-        forward([leg5])
+        forward([leg4, leg6])
+        backward([leg2])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
-        time.sleep(.1)
     setdefault()
 
 def rotateRight():
@@ -161,22 +155,14 @@ def rotateRight():
         liftup([leg1, leg3, leg5])
         forward([leg1, leg3]);
         backward([leg5])
-        time.sleep(.1)
-        forward([leg4, leg6])
-        backward([leg2])
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
-        time.sleep(.1)
         if HALT: break
         liftup([leg2, leg4, leg6])
-        forward([leg4, leg6])
-        backward([leg2])
-        time.sleep(.1)
-        forward([leg1, leg3])
-        backward([leg5])
+        backward([leg4, leg6])
+        forward([leg2])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
-        time.sleep(.1)
     setdefault()
 
 def handleMessage(msg, server):
@@ -240,7 +226,6 @@ def main():
 
 
 try:
-    # threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
     threading.Thread(target=main).start()
     startWebSocketServer("10.0.0.1", 8080)
 except KeyboardInterrupt:
