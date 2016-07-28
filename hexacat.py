@@ -154,7 +154,6 @@ def rotateLeft():
         backward([leg4, leg6])
         forward([leg2])
         time.sleep(.1)
-
     setdefault()
 
 def rotateRight():
@@ -162,16 +161,24 @@ def rotateRight():
     while not HALT:
         print("moving")
         liftup([leg1, leg3, leg5])
-        forward([leg1, leg3]);
+        forward([leg1, leg3])
         backward([leg5])
-        time.sleep(.2)
+        time.sleep(.1)
         setdown([leg1, leg3, leg5])
-        if HALT: break
+        time.sleep(.2)
         liftup([leg2, leg4, leg6])
+        time.sleep(.1)
+        backward([leg1, leg3])
+        forward([leg5])
+        if HALT: break
         backward([leg4, leg6])
         forward([leg2])
-        time.sleep(.2)
+        time.sleep(.1)
         setdown([leg2, leg4, leg6])
+        time.sleep(.2)
+        forward([leg4, leg6])
+        backward([leg2])
+        time.sleep(.1)
     setdefault()
 
 def handleMessage(msg, server):
