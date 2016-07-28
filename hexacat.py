@@ -18,8 +18,9 @@ class RobotServerProtocol(WebSocketServerProtocol):
 
     def onOpen(self):
         print("WebSocket connection open.")
-        # TODO: face smile
-        ledDisplay.draw(Faces.b)
+        ledDisplay.draw(Faces.alt)
+        time.sleep(2)
+        ledDisplay.draw(Faces.main)
 
     def onMessage(self, payload, isBinary):
         if not isBinary:
@@ -189,12 +190,15 @@ def handleMessage(msg, server):
         walkBackward()
     elif msg == "ROTATELEFT":
         HALT = False
+        ledDisplay.draw(Faces.left)
         rotateLeft()
     elif msg == "ROTATERIGHT":
         HALT = False
+        ledDisplay.draw(Faces.right)
         rotateRight()
     elif msg == "STOP":
         HALT = True
+        ledDisplay.draw(Faces.main)
 
     elif msg.startswith("FACE"):
         faceID = int(msg[5:])
@@ -234,7 +238,7 @@ def main():
         # threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
 
         print("Ready for input")
-        ledDisplay.draw(Faces.a)
+        ledDisplay.draw(Faces.main)
 
     except KeyboardInterrupt:
         setdefault()
