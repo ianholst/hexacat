@@ -86,43 +86,59 @@ def setdefault():
         leg.moveLower(0)
         leg.moveUpper(0)
 
-def walkCycle():
+def walkForward():
     global HALT
-    HALT = False
-    setdefault()
-
     while not HALT:
-        print("walk")
+        print("moving")
         liftup([leg1, leg3, leg5])
         forward([leg1, leg3, leg5])
         time.sleep(.1)
         backward([leg2, leg4, leg6])
         time.sleep(.2)
         setdown([leg1, leg3, leg5])
-        time.sleep(.2)
-        print("walk1")
+        time.sleep(.1)
         if HALT: break
-        print("walk2")
         liftup([leg2, leg4, leg6])
         forward([leg2, leg4, leg6])
         time.sleep(.1)
         backward([leg1, leg3, leg5])
         time.sleep(.2)
         setdown([leg2, leg4, leg6])
-        time.sleep(.2)
-
+        time.sleep(.1)
         if HALT: break
+    setdefault()
 
+def walkBackward():
+    global HALT
+    while not HALT:
+        print("moving")
+        liftup([leg1, leg3, leg5])
+        backward([leg1, leg3, leg5])
+        time.sleep(.1)
+        forward([leg2, leg4, leg6])
+        time.sleep(.2)
+        setdown([leg1, leg3, leg5])
+        time.sleep(.2)
+        if HALT: break
+        liftup([leg2, leg4, leg6])
+        backward([leg2, leg4, leg6])
+        time.sleep(.1)
+        forward([leg1, leg3, leg5])
+        time.sleep(.2)
+        setdown([leg2, leg4, leg6])
+        time.sleep(.2)
+        if HALT: break
     setdefault()
 
 def handleMessage(msg, server):
     global HALT
     print(msg)
     if msg == "FORWARD":
-        walkCycle()
-
+        HALT = False
+        walkForward()
     elif msg == "BACKWARD":
-        pass
+        HALT = False
+        walkBackward()
     elif msg == "ROTATELEFT":
         pass
     elif msg == "ROTATERIGHT":
