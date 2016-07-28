@@ -158,8 +158,8 @@ try:
 
     setdefault()
     HALT = True
-    # threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
-    startWebSocketServer("10.0.0.1", 8080)
+    threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
+    # startWebSocketServer("10.0.0.1", 8080)
     print("Ready for input")
     ledDisplay.draw(Faces.a)
 
