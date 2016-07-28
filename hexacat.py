@@ -217,33 +217,33 @@ def handleMessage(msg, server):
 
 def main():
     global HALTservoDriver, ledDisplay, leg1, leg2, leg3, leg4, leg5, leg6, upperMoveAngle, lowerMoveAngle
-    try:
-        print("Starting hardware...")
-        servoDriver = ServoDriver(busnum=1)
-        ledDisplay = LEDDisplay(busnum=2)
-        ledDisplay.shutOff()
 
-        leg1 = Leg(1, servoDriver)
-        leg2 = Leg(2, servoDriver)
-        leg3 = Leg(3, servoDriver, lowerOffset=-8)
-        leg4 = Leg(4, servoDriver, lowerOffset=-7)
-        leg5 = Leg(5, servoDriver, lowerOffset=-5)
-        leg6 = Leg(6, servoDriver)
+    print("Starting hardware...")
+    servoDriver = ServoDriver(busnum=1)
+    ledDisplay = LEDDisplay(busnum=2)
+    ledDisplay.shutOff()
 
-        upperMoveAngle = 20
-        lowerMoveAngle = 25
+    leg1 = Leg(1, servoDriver)
+    leg2 = Leg(2, servoDriver)
+    leg3 = Leg(3, servoDriver, lowerOffset=-8)
+    leg4 = Leg(4, servoDriver, lowerOffset=-7)
+    leg5 = Leg(5, servoDriver, lowerOffset=-5)
+    leg6 = Leg(6, servoDriver)
 
-        setdefault()
-        HALT = True
-        # threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
+    upperMoveAngle = 20
+    lowerMoveAngle = 25
 
-        print("Ready for input")
-        ledDisplay.draw(Faces.main)
+    setdefault()
+    HALT = True
+    print("Ready for input")
+    ledDisplay.draw(Faces.main)
 
-    except KeyboardInterrupt:
-        setdefault()
-        ledDisplay.shutOff()
-        raise
 
-threading.Thread(target=main).start()
-startWebSocketServer("10.0.0.1", 8080)
+try:
+    # threading.Thread(target=startWebSocketServer, args=("10.0.0.1", 8080)).start()
+    threading.Thread(target=main).start()
+    startWebSocketServer("10.0.0.1", 8080)
+except KeyboardInterrupt:
+    setdefault()
+    ledDisplay.shutOff()
+    raise
